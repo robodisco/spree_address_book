@@ -19,7 +19,7 @@ module Spree::AddressesHelper
       form.collection_select(:state_id, country.states.order(:name),
                             :id, :name,
                             {:include_blank => true},
-                            {:class => have_states ? "required" : "hidden",
+                            {:class => have_states ? "required form-control" : "hidden",
                             :disabled => !have_states}) +
       form.text_field(:state_name,
                       :class => !have_states ? "required" : "hidden",
