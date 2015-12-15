@@ -1,16 +1,22 @@
 <% address_id = address_type.chars.first %>
-
 <% ADDRESS_FIELDS.each do |field| %>
   <% if field == "country" %>
-    <p class="form-group" id="<%= "#{address_id}country" %>">
+    <div class="form-group" id="<%= "#{address_id}country" %>">
       <%= address_form.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
       <span id="<%= "#{address_id}country-selection" %>">
         <%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required form-control'} %>
       </span>
-    </p>
+    </div>
   <% elsif field == "state" %>
     <%= address_field(address_form, :state, address_id) { address_state(address_form, address.country, address_id) } if Spree::Config[:address_requires_state] %>
+  <% elsif field == "zipcode" %>
+    <div class="form-group" id=<%="#{address_id}zipcode" %>>
+      <%= address_form.label :zipcode, Spree.t(:zip) %><% if address.require_zipcode? %><span class="required">*</span><br /><% end %>
+      <%= address_form.text_field :zipcode, :class => "form-control #{'required' if address.require_zipcode?}" %>
+      <p class="help-block"><%= Spree.t('addresses.forms.zipcode_hint') %></p>
+    </div>
   <% else %>
+    <% next if field == "zipcode" %>
     <% next if field == "company" && !Spree::Config[:company] %>
     <% next if field == "alternative_#{address_id}_phone" && !Spree::Config["alternative_#{address_id}_phone"] %>
     <%= address_field(address_form, field.to_sym, address_id) %>
