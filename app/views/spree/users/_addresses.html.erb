@@ -21,5 +21,5 @@
 </div>
 <% end %>
 <div id='new_address_link'>
-  <%= link_to t(:add_new_shipping_address, scope: :address_book), controller: :addresses, action: :new, class: 'btn btn-primary' %>
+  <%= link_to t(:add_new_shipping_address, scope: :address_book), { controller: :addresses, action: :new }, class: 'btn btn-primary' %>
 </div>
